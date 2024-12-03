@@ -179,6 +179,100 @@ public:
     }
 };
 int main() {
+    Trie trie;
+    HashTableImplementation hashTable;
+    int option;
+    string input;
+
+    cout << "Welcome to the Hash Table and Trie Search Engine!" << endl;
+    bool control = true;
+
+    while (control) {
+        cout << "\nChoose an option:" << endl;
+        cout << "1. Insert a word into both the Trie and Hash Table" << endl;
+        cout << "2. Search for a word in both the Trie and Hash Table" << endl;
+        cout << "3. Find all words with a prefix in the Hash Table" << endl;
+        cout << "4. Compare search times for Trie and Hash Table" << endl;
+        cout << "5. Exit" << endl;
+        cout << "Enter your option: ";
+        cin >> option;
+
+        if (option == 1) {
+            cout << "Enter the word you want to insert: ";
+            cin >> input;
+            trie.insert(input);
+            hashTable.insert_word(input);
+            cout << input << " inserted successfully into both the Trie and Hash Table!" << endl;
+
+        } else if (option == 2) {
+            cout << "Enter the word you want to search for: ";
+            cin >> input;
+
+
+            auto start_trie = chrono::high_resolution_clock::now();
+            bool trie_result = trie.search(input);
+            auto end_trie = chrono::high_resolution_clock::now();
+            auto duration_trie = chrono::duration_cast<chrono::nanoseconds>(end_trie - start_trie);
+
+
+            auto start_hash = chrono::high_resolution_clock::now();
+            bool hash_result = hashTable.search(input);
+            auto end_hash = chrono::high_resolution_clock::now();
+            auto duration_hash = chrono::duration_cast<chrono::nanoseconds>(end_hash - start_hash);
+
+
+            cout << "\nSearch Results:" << endl;
+            cout << "Trie: " << (trie_result ? "Found" : "Not Found") << " in " << duration_trie.count() << " nanoseconds." << endl;
+            cout << "Hash Table: " << (hash_result ? "Found" : "Not Found") << " in " << duration_hash.count() << " nanoseconds." << endl;
+
+        } else if (option == 3) {
+            cout << "Enter the prefix of the words you want to get: ";
+            cin >> input;
+            cout << "Words starting with: " << input << endl;
+            vector<string> results = hashTable.same_prefix(input);
+            if (results.empty()) {
+                cout << "No words found with the prefix '" << input << "'." << endl;
+            } else {
+                for (const string& word : results) {
+                    cout << word << endl;
+                }
+            }
+
+        } else if (option == 4) {
+            cout << "Enter the word to compare search times: ";
+            cin >> input;
+
+            auto start_trie = chrono::high_resolution_clock::now();
+            bool trie_result = trie.search(input);
+            auto end_trie = chrono::high_resolution_clock::now();
+            auto duration_trie = chrono::duration_cast<chrono::nanoseconds>(end_trie - start_trie);
+
+
+            auto start_hash = chrono::high_resolution_clock::now();
+            bool hash_result = hashTable.search(input);
+            auto end_hash = chrono::high_resolution_clock::now();
+            auto duration_hash = chrono::duration_cast<chrono::nanoseconds>(end_hash - start_hash);
+
+
+            cout << "\nPerformance Comparison:" << endl;
+            cout << "Trie: " << (trie_result ? "Found" : "Not Found") << " in " << duration_trie.count() << " nanoseconds." << endl;
+            cout << "Hash Table: " << (hash_result ? "Found" : "Not Found") << " in " << duration_hash.count() << " nanoseconds." << endl;
+
+
+            if (duration_trie.count() > 0) {
+                double speedup = static_cast<double>(duration_hash.count()) / duration_trie.count();
+                cout << "Speedup (Hash Table / Trie): " << speedup << "x" << endl;
+            } else {
+                cout << "Trie search time is too fast to measure speedup accurately." << endl;
+            }
+
+        } else if (option == 5) {
+            control = false;
+
+        } else {
+            cout << "Invalid option, please provide a valid instruction." << endl;
+        }
+    }
 
     return 0;
 }
