@@ -126,9 +126,9 @@ public:
             cout << word << endl;
         }
 
-        }
+    }
 
-    };
+};
 
 void parseWikipediaDump(const string& filename, Trie& trie)
 {
@@ -150,7 +150,35 @@ void parseWikipediaDump(const string& filename, Trie& trie)
 
 }
 
+
+class HashTableImplementation{
+    unordered_map<string, bool> words_map;
+public:
+    //add the word into the hashtable and mark it true
+    //true means the word exists in the table
+    void insert_word(string word){
+        words_map[word] = true;
+    }
+
+    //if the word exist, return 1 since the key is unique in unordered map
+    // if doesnet then return 0
+    bool search(string word){
+        return words_map.count(word);
+    }
+
+
+    vector<string>same_prefix(string prefix){
+        vector<string> words_contain_prefix;
+        for(auto pair: words_map){
+            //if the key starts with the prefix, add it to vector
+            if(pair.first.find(prefix) == 0){
+                words_contain_prefix.push_back(pair.first);
+            }
+        }
+        return words_contain_prefix;
+    }
+};
 int main() {
 
-return 0;
+    return 0;
 }
