@@ -4,6 +4,7 @@
 #include <string>
 #include <vector>
 #include <queue>
+#include <sstream>
 #include "pugixml-master/src/pugixml.hpp"
 
 using namespace std;
