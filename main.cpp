@@ -130,7 +130,7 @@ public:
 
 };
 
-void parseWikipediaDump(const string& filename, Trie& trie)
+void parseWikipediaDumpIntoTrie(const string& filename, Trie& trie)
 {
     //reference to pugixml library
     pugi::xml_document doc;
@@ -138,16 +138,90 @@ void parseWikipediaDump(const string& filename, Trie& trie)
     if (!result)
     {
         cout << "XML file could not be loaded!"<< endl;
+        cout << "Error: " << result.description() << endl;
         return;
     }
 
     //reference to https://pugixml.org/docs/quickstart.html
-    for(pugi::xml_node page : doc.children("page"))
+    pugi::xml_node feedNode = doc.child("feed");
+    if(feedNode)
     {
-        pugi::xml_node title_node = page.child("title");
+        for(pugi::xml_node docNode : feedNode.children("doc"))
+        {
+            pugi::xml_node titleNode = docNode.child("title");
+            pugi::xml_node abstractNode = docNode.child("abstract");
+            if(titleNode && abstractNode)
+            {
+                string text = abstractNode.text().as_string();
+                stringstream ss(text);
+                string word;
+
+                while(ss>>word)
+                {
+                    for(int i = 0; i<word.size();++i)
+                    {
+                        if(!isalpha(word[i]))
+                        {
+                            word.erase(i,1);
+                            --i;
+                        }
+                    }
+
+                    if(!word.empty())
+                    {
+                        trie.insert(word);
+                    }
+                }
+            }
+        }
+    }
+}
+
+void parseWikipediaDumpIntoHashMap(const string& filename,)
+{
+    //reference to pugixml library
+    pugi::xml_document doc;
+    pugi::xml_parse_result result= doc.load_file(filename.c_str());
+    if (!result)
+    {
+        cout << "XML file could not be loaded!"<< endl;
+        cout << "Error: " << result.description() << endl;
+        return;
     }
 
+    //reference to https://pugixml.org/docs/quickstart.html
+    pugi::xml_node feedNode = doc.child("feed");
+    if(feedNode)
+    {
+        for(pugi::xml_node docNode : feedNode.children("doc"))
+        {
+            pugi::xml_node titleNode = docNode.child("title");
+            pugi::xml_node abstractNode = docNode.child("abstract");
+            if(titleNode && abstractNode)
+            {
+                string text = abstractNode.text().as_string();
+                stringstream ss(text);
+                string word;
 
+                while(ss>>word)
+                {
+                    for(int i = 0; i<word.size();++i)
+                    {
+                        if(!isalpha(word[i]))
+                        {
+                            word.erase(i,1);
+                            --i;
+                        }
+                    }
+
+                    if(!word.empty())
+                    {
+                        trie.insert(word);
+                    }
+                }
+            }
+        }
+    }
 }
 
 
