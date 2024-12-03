@@ -1,0 +1,8 @@
+# ninja log v5
+2	411	7549138031223535	build.ninja	6be337e657aacfca
+8	713	7549137273826413	CMakeFiles/project_3.dir/main.cpp.obj	8d6ed50f8756e024
+889	1069	7549021220326691	project_3.exe	ca5a1827601c795e
+1	278	7549138031223535	build.ninja	6be337e657aacfca
+3	615	7549138038610255	CMakeFiles/project_3.dir/main.cpp.obj	8d6ed50f8756e024
+8	1281	7549138045245152	CMakeFiles/project_3.dir/pugixml-master/src/pugixml.cpp.obj	b05372ce05556427
+1281	1467	7549138047090277	project_3.exe	8dd981c99a4b614a
