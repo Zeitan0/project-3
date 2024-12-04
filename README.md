@@ -9,3 +9,13 @@ Recommend using wikipedia dump database abstract xml document
 
 
 if not, you should change the parse function in the code.
+
+Using Instructions:
+
+Download wikipedia dump file named abstarct.xml.gz from https://dumps.wikimedia.org/enwiki/20240901/
+
+Extract the file
+
+Run the code and provide the path to the file in IDE
+
+choose the to compare exact search or prefix search using two different structures
