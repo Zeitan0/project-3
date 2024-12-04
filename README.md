@@ -16,6 +16,6 @@ Download wikipedia dump file named abstarct.xml.gz from https://dumps.wikimedia.
 
 Extract the file
 
-Run the code and provide the path to the file in IDE
+Run the code and provide the path to the xml file in IDE
 
 choose the to compare exact search or prefix search using two different structures
