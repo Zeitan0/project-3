@@ -5,7 +5,7 @@ Name:Zengtao Liang, Yiru Chen, Edward Zhao
 Trie and Hash Table Search Engine
 
 
-Recommend using wikipedia dump database abstract document
+Recommend using wikipedia dump database abstract xml document
 
 
 if not, you should change the parse function in the code.
